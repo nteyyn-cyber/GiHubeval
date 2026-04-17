@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Checkout SCM') {
             steps {
-                git branch: 'main', url: 'https://github.com/USERNAME/githubeval.git'
+                git branch: 'main', url: 'https://github.com/nteyyn-cyber/GiHubeval.git'
             }
         }
         stage('Install Docker') {
