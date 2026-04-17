@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+    stages {
+        stage('Nettoyage') {
+            steps {
+                cleanWs()
+            }
+        }
+        stage('Checkout SCM') {
+            steps {
+                git branch: 'main', url: 'https://github.com/USERNAME/githubeval.git'
+            }
+        }
+        stage('Install Docker') {
+            steps {
+                sh 'apt update -y'
+                sh 'apt install -y docker.io'
+                sh 'systemctl unmask docker'
+                sh 'systemctl start docker'
+                sh 'chmod 666 /var/run/docker.sock'
+            }
+        }
+        stage('Nettoyer images et conteneurs') {
+            steps {
+                sh 'docker stop myapp || true'
+                sh 'docker rm myapp || true'
+                sh 'docker rmi my-nginx || true'
+            }
+        }
+        stage('Build image my-nginx') {
+            steps {
+                sh 'docker build -t my-nginx .'
+                sh 'docker images'
+            }
+        }
+        stage('Deploy myapp') {
+            steps {
+                sh 'docker run -d --name myapp -p 80:80 my-nginx'
+                sh 'docker ps'
+                sh 'docker inspect myapp | grep IPAddress'
+            }
+        }
+    }
+}
