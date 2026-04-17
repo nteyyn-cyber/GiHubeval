@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+    stages {
+        stage('Nettoyage') {
+            steps {
+                cleanWs()
+            }
+        }
+        stage('Checkout SCM') {
+            steps {
+                git branch: 'main', url: 'https://github.com/nteyyn-cyber/GiHubeval.git'
+            }
+        }
+        stage('Build image my-nginx') {
+            steps {
+                sh 'docker build -t my-nginx .'
+                sh 'docker images'
+            }
+        }
+    }
+}
