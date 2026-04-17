@@ -1,11 +1,1 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Mon App DevOps</title>
-</head>
-<body>
-    <h1>Application deployee par Jenkins + Docker</h1>
-    <p>Pipeline CI/CD fonctionnel !</p>
-</body>
-</html>
+
